@@ -1,0 +1,31 @@
+{
+  "name": "waldowhere",
+  "version": "1.0.0",
+  "description": "Where's Waldo game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Relyful/WaldoWhere.git"
+  },
+  "author": "Relyful",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Relyful/WaldoWhere/issues"
+  },
+  "homepage": "https://github.com/Relyful/WaldoWhere#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "prettier": "3.6.2",
+    "prisma": "^6.19.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
