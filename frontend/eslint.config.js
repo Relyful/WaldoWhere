@@ -12,10 +12,7 @@ export default defineConfig([
       react: {
         version: "detect",
       },
-    },
-    rules: {
-      "react/react-in-jsx-scope": "off",
-    },
+    },    
   },
 
   // Keep recommended rules
@@ -23,4 +20,11 @@ export default defineConfig([
 
   // Add JSX runtime rules so no React import is required
   pluginReact.configs.flat["jsx-runtime"],
+
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": 'off',
+    },
+  }
 ]);
