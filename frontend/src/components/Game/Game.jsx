@@ -5,7 +5,7 @@ function TargetBox({top, left}) {
   console.log(top, left)
   return (
     <div className={styles.target} style={{position: 'absolute', top: top, left: left}}>
-      <div className={styles.targetMenu}>
+      <div className={`${styles.targetMenu}`}>
       <ul>
         <li>Waldo</li>
         <li>Yellow Waldo</li>
@@ -21,10 +21,8 @@ function Game() {
   const gameElement = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
 
-  function handleGameAreaClick(e) {
-    if (clickTarget !== null) {
-      return setClickTarget(null);
-    }
+  function handleGameAreaClick(e) {    
+    e.stopPropagation();
     const rect = gameElement.current.getBoundingClientRect();
     const mouseClickX = e.clientX;
     const mouseClickY = e.clientY;
@@ -35,15 +33,20 @@ function Game() {
       'x': mouseClickX - elementX - 5,
       'y': mouseClickY - elementY - 5,
     });
-    console.log('fired')
-    return;
+    return;    
   }
 
+  function handleGameContainerClick(e) {    
+    if (clickTarget !== null) {
+      return setClickTarget(null);
+    }
+    return;
+    }
 
   return (
-    <div className={styles.gameContainer}>
+    <div className={styles.gameContainer} onClick={handleGameContainerClick}>
       <div className={styles.gameArea} onClick={handleGameAreaClick} ref={gameElement}>
-        {clickTarget && <TargetBox top={clickTarget.y} left={clickTarget.x} />}
+        {clickTarget && <TargetBox top={clickTarget.y} left={clickTarget.x} key={`${clickTarget.x}-${clickTarget.y}`}/>}
       </div>
     </div>
   )

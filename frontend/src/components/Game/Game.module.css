@@ -27,8 +27,23 @@
   padding: 0;
   overflow: hidden;
   background-color: white;
+
+  animation: menuEnter 150ms ease-out forwards;
+  transform-origin: top left;
 }
 
 .targetMenu ul li {
   border: 1px solid black;
+  padding: 0 0.5em;
+}
+
+@keyframes menuEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
