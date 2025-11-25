@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import styles from './Game.module.css'
 
 function TargetBox({top, left}) {
-  console.log(top, left)
   return (
     <div className={styles.target} style={{position: 'absolute', top: top, left: left}}>
       <div className={`${styles.targetMenu}`}>
@@ -28,10 +27,15 @@ function Game() {
     const mouseClickY = e.clientY;
     const elementX = rect.left;
     const elementY = rect.top;
+    const result = {
+      'x': mouseClickX - elementX,
+      'y': mouseClickY - elementY,
+    };
+    console.log(result);
     setClickTarget({
       // -5 to center target on the middle of the mouse
-      'x': mouseClickX - elementX - 5,
-      'y': mouseClickY - elementY - 5,
+      'x': result.x - 5,
+      'y': result.y - 5,
     });
     return;    
   }
