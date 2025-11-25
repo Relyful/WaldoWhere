@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import styles from './Game.module.css'
+import waldoImage1 from '../../assets/Waldo1.jpg'
 
 function TargetBox({top, left}) {
   return (
@@ -50,6 +51,7 @@ function Game() {
   return (
     <div className={styles.gameContainer} onClick={handleGameContainerClick}>
       <div className={styles.gameArea} onClick={handleGameAreaClick} ref={gameElement}>
+        <img src={waldoImage1} alt="Where's Waldo game" className={styles.waldoPic}/>
         {clickTarget && <TargetBox top={clickTarget.y} left={clickTarget.x} key={`${clickTarget.x}-${clickTarget.y}`}/>}
       </div>
     </div>

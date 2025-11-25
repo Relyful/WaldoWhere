@@ -1,15 +1,21 @@
 .gameContainer {
-  flex-grow: 1;
   display: flex;
   justify-content: center;
 }
 
 .gameArea {
   position: relative;
-  width: 720px;
-  height: 480px;
+  display: inline-block;  /* shrink-wrap */
+  width: 75%;
   border: solid 1px black;
   background-color: gray;
+}
+
+.waldoPic {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  display: block;
 }
 
 .target {
