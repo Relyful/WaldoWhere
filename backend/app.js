@@ -1,5 +1,6 @@
 // const { PrismaClient } = require('./generated/prisma/client.ts');
 const express = require('express');
+const indexRouter = require('./routers/indexRouter');
 
 require('dotenv').config()
 
@@ -14,9 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 //Allow json 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-})
+app.use('/', indexRouter);
 
 //Catch all route
 app.get("/*splat", (req, res) => {
