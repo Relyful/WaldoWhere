@@ -3,6 +3,5 @@ backend/node_modules
 backend/.env
 
 backend/generated/prisma
-backend/prisma
 backend/prisma.configt.ts
 
