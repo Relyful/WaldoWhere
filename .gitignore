@@ -4,4 +4,4 @@ backend/.env
 
 backend/generated/prisma
 backend/prisma.configt.ts
-
+backend/seed.js
