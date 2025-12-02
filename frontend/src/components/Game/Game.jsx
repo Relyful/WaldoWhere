@@ -4,7 +4,7 @@ import waldoImage1 from '../../assets/Waldo1.jpg'
 
 function TargetBox({top, left}) {
   return (
-    <div className={styles.target} style={{position: 'absolute', top: top, left: left}}>
+    <div className={styles.target} style={{position: 'absolute', top: `${top}%`, left: `${left}%`, transform: 'translate(-50%, -50%)'}}>
       <div className={`${styles.targetMenu}`}>
       <ul>
         <li>Waldo</li>
@@ -32,11 +32,12 @@ function Game() {
       'x': mouseClickX - elementX,
       'y': mouseClickY - elementY,
     };
-    console.log(result);
+    const xPercentage = (result.x / rect.width) * 100;
+    const yPercentage = (result.y / rect.height) * 100;
+    console.log({xPercentage, yPercentage});
     setClickTarget({
-      // -5 to center target on the middle of the mouse
-      'x': result.x - 5,
-      'y': result.y - 5,
+      'x': xPercentage,
+      'y': yPercentage,
     });
     return;    
   }
@@ -47,6 +48,21 @@ function Game() {
     }
     return;
     }
+
+  function calculateTargetPosition() {
+    const element = gameElement.current;
+    if (!element || !clickTarget) {
+      return { top: 0, left: 0 };
+    }
+    const rect = element.getBoundingClientRect();
+    const top = (rect.height / 100) * clickTarget.y;
+    const left = (rect.width / 100) * clickTarget.x;
+    return {
+      'top': top,
+      'left': left,
+    }
+  }
+  const targetPosition = calculateTargetPosition();
 
   return (
     <div className={styles.gameContainer} onClick={handleGameContainerClick}>

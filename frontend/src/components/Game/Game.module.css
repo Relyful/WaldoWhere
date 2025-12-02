@@ -1,12 +1,15 @@
 .gameContainer {
   display: flex;
   justify-content: center;
+  flex-grow: 1;
 }
 
 .gameArea {
   position: relative;
   display: inline-block;  /* shrink-wrap */
-  width: 75%;
+  width: 75vw;
+  aspect-ratio: 16 / 9;
+  max-height: 1080px;
   border: solid 1px black;
   background-color: gray;
 }
@@ -14,7 +17,7 @@
 .waldoPic {
   width: 100%;
   max-width: 1920px;
-  height: auto;
+  height: 100%;
   display: block;
 }
 
@@ -51,5 +54,11 @@
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+@media only screen and (min-width: 2350px) {
+  .gameArea {
+    width: 70%;
   }
 }
