@@ -24,8 +24,8 @@ model Leaderboard {
 model WaldoGame {
   id  Int  @id @default(autoincrement())
   name  String
-  xStart  Int
-  xEnd  Int
-  yStart  Int
-  yEnd Int
+  xStart  Float
+  xEnd  Float
+  yStart  Float
+  yEnd Float
 }
