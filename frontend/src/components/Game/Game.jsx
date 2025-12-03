@@ -2,14 +2,14 @@ import { useRef, useState } from 'react';
 import styles from './Game.module.css'
 import waldoImage1 from '../../assets/Waldo1.jpg'
 
-function TargetBox({top, left}) {
+function TargetBox({top, left, handleGameGuess}) {
   return (
     <div className={styles.target} style={{position: 'absolute', top: `${top}%`, left: `${left}%`, transform: 'translate(-50%, -50%)'}}>
       <div className={`${styles.targetMenu}`}>
       <ul>
-        <li>Waldo</li>
-        <li>Yellow Waldo</li>
-        <li>Wizard</li>
+        <li onClick={(e) => handleGameGuess(e, 'Waldo')}>Waldo</li>
+        <li onClick={(e) => handleGameGuess(e, 'Odlaw')}>Odlaw</li>
+        <li onClick={(e) => handleGameGuess(e, 'Wizard')}>Wizard</li>
       </ul>
     </div>
     </div>
@@ -17,10 +17,19 @@ function TargetBox({top, left}) {
   )
 }
 
+function CorrectGuessBox() {
+  return (
+    <div>⭐</div>
+  )
+}
+
 function Game() {
   const gameElement = useRef(null);
+  const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
 
+  console.log(correctGuesses);
   function handleGameAreaClick(e) {    
     e.stopPropagation();
     const rect = gameElement.current.getBoundingClientRect();
@@ -45,30 +54,52 @@ function Game() {
   function handleGameContainerClick(e) {    
     if (clickTarget !== null) {
       return setClickTarget(null);
-    }
+    }    
     return;
     }
 
-  function calculateTargetPosition() {
-    const element = gameElement.current;
-    if (!element || !clickTarget) {
-      return { top: 0, left: 0 };
+    async function handleGameGuess(e, name) {
+      //TODO: filter out name var from correctGuessList
+      e.stopPropagation();
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      };
+      abortControllerRef.current = new AbortController();
+      const backendAddress = import.meta.env.VITE_backend_address || 'http://localhost:8080';
+      const x = clickTarget.x;
+      const y = clickTarget.y;
+      try {
+        const response = await fetch(`${backendAddress}/guess`, {
+          signal: abortControllerRef.current.signal,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'x': x,
+            'y': y,
+            'character': name,
+          })          
+        });
+        if (!response.ok) {
+          throw new Error('Error sending guess request.');
+        };
+        const responseData = await response.json();
+        console.log(responseData);
+        if (responseData.hit) {
+          setCorrectGuesses(prevState => [...prevState, {x, y, name}])
+        }        
+      } catch (error) {
+        console.error(error);
+      }    
+    return setClickTarget(null);
     }
-    const rect = element.getBoundingClientRect();
-    const top = (rect.height / 100) * clickTarget.y;
-    const left = (rect.width / 100) * clickTarget.x;
-    return {
-      'top': top,
-      'left': left,
-    }
-  }
-  const targetPosition = calculateTargetPosition();
 
   return (
     <div className={styles.gameContainer} onClick={handleGameContainerClick}>
       <div className={styles.gameArea} onClick={handleGameAreaClick} ref={gameElement}>
         <img src={waldoImage1} alt="Where's Waldo game" className={styles.waldoPic}/>
-        {clickTarget && <TargetBox top={clickTarget.y} left={clickTarget.x} key={`${clickTarget.x}-${clickTarget.y}`}/>}
+        {clickTarget && <TargetBox top={clickTarget.y} left={clickTarget.x} handleGameGuess={handleGameGuess}  key={`${clickTarget.x}-${clickTarget.y}`}/>}
       </div>
     </div>
   )
