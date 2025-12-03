@@ -4,6 +4,6 @@ const indexController = require("../controllers/indexController");
 const indexRouter = Router();
 
 indexRouter.get("/", indexController.getIndex);
-indexRouter.get("/guess", indexController.getGuess);
+indexRouter.post("/guess", indexController.getGuess);
 
 module.exports = indexRouter;

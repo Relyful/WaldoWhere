@@ -1,6 +1,7 @@
 // const { PrismaClient } = require('./generated/prisma/client.ts');
 const express = require('express');
 const indexRouter = require('./routers/indexRouter');
+const cors = require('cors');
 
 require('dotenv').config()
 
@@ -11,7 +12,7 @@ const app = express();
 //Set-up url request body parsing
 app.use(express.urlencoded({ extended: false }));
 //Set-up cors access
-// app.use(cors({origin: ["https://relys-blog.vercel.app", "https://relys-blog-admin.vercel.app", "http://localhost:5173", "http://localhost:5174"]}));
+app.use(cors({origin: ["http://localhost:5173"]}));
 //Allow json 
 app.use(express.json());
 
