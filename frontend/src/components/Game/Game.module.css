@@ -46,6 +46,10 @@
   padding: 0 0.5em;
 }
 
+.disabled {
+  opacity: 0.5;
+}
+
 @keyframes menuEnter {
   0% {
     opacity: 0;
