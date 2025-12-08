@@ -40,8 +40,20 @@ function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
   );
 }
 
-function CorrectGuessBox() {
-  return <div>⭐</div>;
+function CorrectGuessBoxes({ correctGuesses }) {
+    const correctGuessMarkers = correctGuesses?.map((guess) => {
+      return (
+        <div key={`${guess.y},${guess.x}`}
+          style={{
+            position: "absolute",
+            top: `${guess.y}%`,
+            left: `${guess.x}%`,
+            transform: "translate(-50%, -50%)",
+          }}
+        >⭐</div>
+      )
+    })
+  return <>{correctGuessMarkers}</>
 }
 
 function Game() {
@@ -77,6 +89,8 @@ function Game() {
     }
     return;
   }
+
+  const areThereCorrectGuesses = () => correctGuesses.length > 0;
 
   async function handleGameGuess(e, name) {
     e.stopPropagation();
@@ -136,6 +150,7 @@ function Game() {
             key={`${clickTarget.x}-${clickTarget.y}`}
           />
         )}
+        {areThereCorrectGuesses && <CorrectGuessBoxes correctGuesses={correctGuesses} />}
       </div>
     </div>
   );
