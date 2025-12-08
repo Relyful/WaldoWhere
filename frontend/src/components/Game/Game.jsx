@@ -9,11 +9,11 @@ function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
     return (
       <li
         key={name}
-        className={foundCharacters.includes(name) && styles.disabled}
+        className={foundCharacters.includes(name) ? styles.disabled : undefined}
         onClick={
           !foundCharacters.includes(name) ?
           ((e) => handleGameGuess(e, name)) :
-          undefined
+          ((e) => e.stopPropagation())
         }
       >
         {name}
