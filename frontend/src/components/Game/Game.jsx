@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Timer from "../Timer/Timer";
 import styles from "./Game.module.css";
 import waldoImage1 from "../../assets/Waldo1.jpg";
+import WinDialog from "../WinDialog/WinDialog";
 
 function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
   const availableChars = ["Waldo", "Odlaw", "Wizard"];
@@ -65,6 +66,8 @@ function Game() {
   const [timer, setTimer] = useState(0);
   const timerInterval = useRef(null);
 
+  const win = correctGuesses.length > 2;
+
   function handleGameAreaClick(e) {
     e.stopPropagation();
     const rect = gameElement.current.getBoundingClientRect();
@@ -91,9 +94,7 @@ function Game() {
       return setClickTarget(null);
     }
     return;
-  }
-
-  const areThereCorrectGuesses = () => correctGuesses.length > 0;
+  }  
 
   async function handleGameGuess(e, name) {
     e.stopPropagation();
@@ -132,8 +133,12 @@ function Game() {
     return setClickTarget(null);
   }
 
+  const areThereCorrectGuesses = (() => correctGuesses.length > 0)();  
+  win ? clearInterval(timerInterval.current) : undefined;
+
   return (
     <>
+      {win && <WinDialog />}
       <Timer timer={timer} setTimer={setTimer} timerInterval={timerInterval} />
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
         <div
