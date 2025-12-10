@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import Timer from "../Timer/Timer";
 import styles from "./Game.module.css";
 import waldoImage1 from "../../assets/Waldo1.jpg";
 
@@ -61,6 +62,8 @@ function Game() {
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [timer, setTimer] = useState(0);
+  const timerInterval = useRef(null);
 
   function handleGameAreaClick(e) {
     e.stopPropagation();
@@ -130,29 +133,32 @@ function Game() {
   }
 
   return (
-    <div className={styles.gameContainer} onClick={handleGameContainerClick}>
-      <div
-        className={styles.gameArea}
-        onClick={handleGameAreaClick}
-        ref={gameElement}
-      >
-        <img
-          src={waldoImage1}
-          alt="Where's Waldo game"
-          className={styles.waldoPic}
-        />
-        {clickTarget && (
-          <TargetBox
-            top={clickTarget.y}
-            left={clickTarget.x}
-            handleGameGuess={handleGameGuess}
-            correctGuesses={correctGuesses}
-            key={`${clickTarget.x}-${clickTarget.y}`}
+    <>
+      <Timer timer={timer} setTimer={setTimer} timerInterval={timerInterval} />
+      <div className={styles.gameContainer} onClick={handleGameContainerClick}>
+        <div
+          className={styles.gameArea}
+          onClick={handleGameAreaClick}
+          ref={gameElement}
+        >
+          <img
+            src={waldoImage1}
+            alt="Where's Waldo game"
+            className={styles.waldoPic}
           />
-        )}
-        {areThereCorrectGuesses && <CorrectGuessBoxes correctGuesses={correctGuesses} />}
+          {clickTarget && (
+            <TargetBox
+              top={clickTarget.y}
+              left={clickTarget.x}
+              handleGameGuess={handleGameGuess}
+              correctGuesses={correctGuesses}
+              key={`${clickTarget.x}-${clickTarget.y}`}
+            />
+          )}
+          {areThereCorrectGuesses && <CorrectGuessBoxes correctGuesses={correctGuesses} />}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
