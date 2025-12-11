@@ -13,9 +13,9 @@ function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
         key={name}
         className={foundCharacters.includes(name) ? styles.disabled : undefined}
         onClick={
-          !foundCharacters.includes(name) ?
-          ((e) => handleGameGuess(e, name)) :
-          ((e) => e.stopPropagation())
+          !foundCharacters.includes(name)
+            ? (e) => handleGameGuess(e, name)
+            : (e) => e.stopPropagation()
         }
       >
         {name}
@@ -34,28 +34,29 @@ function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
       }}
     >
       <div className={`${styles.targetMenu}`}>
-        <ul>
-          {guessOptions}
-        </ul>
+        <ul>{guessOptions}</ul>
       </div>
     </div>
   );
 }
 
 function CorrectGuessBoxes({ correctGuesses }) {
-    const correctGuessMarkers = correctGuesses?.map((guess) => {
-      return (
-        <div key={`${guess.y},${guess.x}`}
-          style={{
-            position: "absolute",
-            top: `${guess.y}%`,
-            left: `${guess.x}%`,
-            transform: "translate(-50%, -50%)",
-          }}
-        >⭐</div>
-      )
-    })
-  return <>{correctGuessMarkers}</>
+  const correctGuessMarkers = correctGuesses?.map((guess) => {
+    return (
+      <div
+        key={`${guess.y},${guess.x}`}
+        style={{
+          position: "absolute",
+          top: `${guess.y}%`,
+          left: `${guess.x}%`,
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        ⭐
+      </div>
+    );
+  });
+  return <>{correctGuessMarkers}</>;
 }
 
 function Game() {
@@ -94,7 +95,7 @@ function Game() {
       return setClickTarget(null);
     }
     return;
-  }  
+  }
 
   async function handleGameGuess(e, name) {
     e.stopPropagation();
@@ -118,6 +119,7 @@ function Game() {
           y: y,
           character: name,
         }),
+        credentials: "include"
       });
       if (!response.ok) {
         throw new Error("Error sending guess request.");
@@ -133,8 +135,28 @@ function Game() {
     return setClickTarget(null);
   }
 
-  const areThereCorrectGuesses = (() => correctGuesses.length > 0)();  
-  win ? clearInterval(timerInterval.current) : undefined;
+  async function handleStopTimer() {
+    if (win) {
+      const backendAddress =
+        import.meta.env.VITE_backend_address || "http://localhost:8080";
+      try {
+        const response = await fetch(`${backendAddress}/game/stop`, {
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Error contacting server");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
+  const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
+  if (win) {
+    handleStopTimer();
+    clearInterval(timerInterval.current);
+  }
 
   return (
     <>
@@ -160,7 +182,9 @@ function Game() {
               key={`${clickTarget.x}-${clickTarget.y}`}
             />
           )}
-          {areThereCorrectGuesses && <CorrectGuessBoxes correctGuesses={correctGuesses} />}
+          {areThereCorrectGuesses && (
+            <CorrectGuessBoxes correctGuesses={correctGuesses} />
+          )}
         </div>
       </div>
     </>
