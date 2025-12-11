@@ -1,7 +1,9 @@
 // const { PrismaClient } = require('./generated/prisma/client.ts');
 const express = require('express');
 const indexRouter = require('./routers/indexRouter');
+const gameRouter = require('./routers/gameRouter');
 const cors = require('cors');
+const session = require('express-session');
 
 require('dotenv').config()
 
@@ -12,11 +14,37 @@ const app = express();
 //Set-up url request body parsing
 app.use(express.urlencoded({ extended: false }));
 //Set-up cors access
-app.use(cors({origin: ["http://localhost:5173"]}));
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  credentials: true
+}));
 //Allow json 
 app.use(express.json());
+//Set-up session
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 6}, //6 hours
+}));
+
+app.use((req, res, next) => {
+  if (!req.session.timerStart) {
+    req.session.timerStart = Date.now();
+    console.log(req.session.timerStart);
+  } else {
+    const start = req.session.timerStart;
+    const end = Date.now();
+    const intermediate = end - start;
+    console.log(`inter Time ${intermediate}`)
+    console.log(start);
+    console.log(end);
+  };  
+  next();
+})
 
 app.use('/', indexRouter);
+app.use('/game', gameRouter)
 
 //Catch all route
 app.get("/*splat", (req, res) => {
