@@ -28,21 +28,6 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 6}, //6 hours
 }));
 
-app.use((req, res, next) => {
-  if (!req.session.timerStart) {
-    req.session.timerStart = Date.now();
-    console.log(req.session.timerStart);
-  } else {
-    const start = req.session.timerStart;
-    const end = Date.now();
-    const intermediate = end - start;
-    console.log(`inter Time ${intermediate}`)
-    console.log(start);
-    console.log(end);
-  };  
-  next();
-})
-
 app.use('/', indexRouter);
 app.use('/game', gameRouter)
 
