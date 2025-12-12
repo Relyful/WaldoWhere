@@ -4,6 +4,8 @@ import styles from "./Game.module.css";
 import waldoImage1 from "../../assets/Waldo1.jpg";
 import WinDialog from "../WinDialog/WinDialog";
 import { useGameTimer } from "../../hooks/useGameTimer";
+import { callGameStart, callGameGuess, callStopTimer } from "../../api/gameApi";
+import { getClickPercent } from "../../utils/gameUtils";
 
 function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
   const availableChars = ["Waldo", "Odlaw", "Wizard"];
@@ -65,55 +67,28 @@ function Game() {
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
-  const { timer, stopTimer, intervalRef } = useGameTimer();
-  
+  const { timer, stopTimer, intervalRef } = useGameTimer();  
 
   const win = correctGuesses.length > 2;
+
   // start timer on server
   useEffect(() => {
-    const controller = new AbortController();
-    async function callGameStart() {
-      const backendAddress =
-        import.meta.env.VITE_backend_address || "http://localhost:8080";
-      try {
-        const response = await fetch(`${backendAddress}/game/start`, {
-          signal: controller.signal,
-          method: 'POST',
-          credentials: "include"
-        });
-        if (!response.ok) {
-          throw new Error("Error starting timer");
-        }
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          console.log('Start timer aborted');
-          return
-        };
-        console.error(error);
-      }
-    }
-    callGameStart();
+    const controller = new AbortController();    
+    callGameStart(controller);
     return () => controller.abort();
   }, []);
 
+  // win effect
+  useEffect(() => {
+    if (!win) return;
+    callStopTimer();
+    stopTimer();
+  }, [win]);
+
   function handleGameAreaClick(e) {
     e.stopPropagation();
-    const rect = gameElement.current.getBoundingClientRect();
-    const mouseClickX = e.clientX;
-    const mouseClickY = e.clientY;
-    const elementX = rect.left;
-    const elementY = rect.top;
-    const result = {
-      x: mouseClickX - elementX,
-      y: mouseClickY - elementY,
-    };
-    const xPercentage = (result.x / rect.width) * 100;
-    const yPercentage = (result.y / rect.height) * 100;
-    console.log({ xPercentage, yPercentage });
-    setClickTarget({
-      x: xPercentage,
-      y: yPercentage,
-    });
+    const coords = getClickPercent(e, gameElement);
+    setClickTarget(coords);
     return;
   }
 
@@ -130,61 +105,13 @@ function Game() {
       abortControllerRef.current.abort();
     }
     abortControllerRef.current = new AbortController();
-    const backendAddress =
-      import.meta.env.VITE_backend_address || "http://localhost:8080";
     const x = clickTarget.x;
     const y = clickTarget.y;
-    try {
-      const response = await fetch(`${backendAddress}/guess`, {
-        signal: abortControllerRef.current.signal,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          x: x,
-          y: y,
-          character: name,
-        }),
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Error sending guess request.");
-      }
-      const responseData = await response.json();
-      console.log(responseData);
-      if (responseData.hit) {
-        setCorrectGuesses((prevState) => [...prevState, { x, y, name }]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    callGameGuess(x, y, name, abortControllerRef.current.signal, setCorrectGuesses);
     return setClickTarget(null);
   }
 
-  async function handleStopTimer() {
-    if (win) {
-      const backendAddress =
-        import.meta.env.VITE_backend_address || "http://localhost:8080";
-      try {
-        const response = await fetch(`${backendAddress}/game/stop`, {
-          method: 'POST',
-          credentials: "include"
-        });
-        if (!response.ok) {
-          throw new Error("Error contacting server");
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    stopTimer();
-  }
-
   const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
-  if (win) {
-    handleStopTimer();    
-  }
 
   return (
     <>
