@@ -69,18 +69,24 @@ function Game() {
 
   const win = correctGuesses.length > 2;
   // start timer on server
-  useEffect(async () => {
-    const backendAddress =
-      import.meta.env.VITE_backend_address || "http://localhost:8080";
-    try {
-      const response = await fetch(`${backendAddress}/game/start`);
-    if (!response.ok) {
-      throw new Error('Error starting timer');
-    };
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    async function callGameStart() {
+      const backendAddress =
+        import.meta.env.VITE_backend_address || "http://localhost:8080";
+      try {
+        const response = await fetch(`${backendAddress}/game/start`, {
+          method: 'POST',
+          credentials: "include"
+        });
+        if (!response.ok) {
+          throw new Error("Error starting timer");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
-  })
+    callGameStart();
+  }, []);
 
   function handleGameAreaClick(e) {
     e.stopPropagation();
@@ -132,7 +138,7 @@ function Game() {
           y: y,
           character: name,
         }),
-        credentials: "include"
+        credentials: "include",
       });
       if (!response.ok) {
         throw new Error("Error sending guess request.");
@@ -154,7 +160,8 @@ function Game() {
         import.meta.env.VITE_backend_address || "http://localhost:8080";
       try {
         const response = await fetch(`${backendAddress}/game/stop`, {
-          credentials: "include",
+          method: 'POST',
+          credentials: "include"
         });
         if (!response.ok) {
           throw new Error("Error contacting server");
