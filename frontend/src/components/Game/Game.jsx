@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Timer from "../Timer/Timer";
 import styles from "./Game.module.css";
 import waldoImage1 from "../../assets/Waldo1.jpg";
@@ -68,6 +68,19 @@ function Game() {
   const timerInterval = useRef(null);
 
   const win = correctGuesses.length > 2;
+  // start timer on server
+  useEffect(async () => {
+    const backendAddress =
+      import.meta.env.VITE_backend_address || "http://localhost:8080";
+    try {
+      const response = await fetch(`${backendAddress}/game/start`);
+    if (!response.ok) {
+      throw new Error('Error starting timer');
+    };
+    } catch (error) {
+      console.error(error);
+    }
+  })
 
   function handleGameAreaClick(e) {
     e.stopPropagation();
