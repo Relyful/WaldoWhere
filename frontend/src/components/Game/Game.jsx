@@ -70,11 +70,13 @@ function Game() {
   const win = correctGuesses.length > 2;
   // start timer on server
   useEffect(() => {
+    const controller = new AbortController();
     async function callGameStart() {
       const backendAddress =
         import.meta.env.VITE_backend_address || "http://localhost:8080";
       try {
         const response = await fetch(`${backendAddress}/game/start`, {
+          signal: controller.signal,
           method: 'POST',
           credentials: "include"
         });
@@ -82,10 +84,15 @@ function Game() {
           throw new Error("Error starting timer");
         }
       } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Start timer aborted');
+          return
+        };
         console.error(error);
       }
     }
     callGameStart();
+    return () => controller.abort();
   }, []);
 
   function handleGameAreaClick(e) {
