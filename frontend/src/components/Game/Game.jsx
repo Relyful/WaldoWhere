@@ -3,6 +3,7 @@ import Timer from "../Timer/Timer";
 import styles from "./Game.module.css";
 import waldoImage1 from "../../assets/Waldo1.jpg";
 import WinDialog from "../WinDialog/WinDialog";
+import { useGameTimer } from "../../hooks/useGameTimer";
 
 function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
   const availableChars = ["Waldo", "Odlaw", "Wizard"];
@@ -64,8 +65,8 @@ function Game() {
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
-  const [timer, setTimer] = useState(0);
-  const timerInterval = useRef(null);
+  const { timer, stopTimer, intervalRef } = useGameTimer();
+  
 
   const win = correctGuesses.length > 2;
   // start timer on server
@@ -177,18 +178,18 @@ function Game() {
         console.error(err);
       }
     }
+    stopTimer();
   }
 
   const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
   if (win) {
-    handleStopTimer();
-    clearInterval(timerInterval.current);
+    handleStopTimer();    
   }
 
   return (
     <>
       {win && <WinDialog />}
-      <Timer timer={timer} setTimer={setTimer} timerInterval={timerInterval} />
+      <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
         <div
           className={styles.gameArea}

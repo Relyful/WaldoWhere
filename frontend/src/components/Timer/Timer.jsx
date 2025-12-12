@@ -1,13 +1,6 @@
-import { useEffect } from "react";
 import styles from "./Timer.module.css"
 
-function Timer({timer, setTimer, timerInterval}) {
-  useEffect(() => {
-    timerInterval.current = setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 10);
-    return () => clearInterval(timerInterval.current);
-  }, []);
+function Timer({timer}) {
 
   // Minutes calculation
   const minutes = Math.floor((timer) / 6000);
