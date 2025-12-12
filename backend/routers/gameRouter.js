@@ -3,6 +3,7 @@ const gameController = require('../controllers/gameController');
 
 const gameRouter = Router();
 
-gameRouter.get('/stop', gameController.getTimerStop);
+gameRouter.post('/stop', gameController.postTimerStop);
+gameRouter.post('/start', gameController.postTimerStart);
 
 module.exports = gameRouter;
