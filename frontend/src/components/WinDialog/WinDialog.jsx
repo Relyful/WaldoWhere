@@ -10,15 +10,24 @@ function Submit() {
   )
 }
 
-export default function WinDialog() {
+export default function WinDialog({ timer }) {
+
+  // Minutes calculation
+  const minutes = Math.floor(timer / 60);
+
+  // Seconds calculation
+  const seconds = timer % 60;
+  
   return (
   <div className={styles.dialogBackdrop}>
     <div className={styles.dialogContent}>
-      You Win
-      <form>
-      <input type="text" name="username" id="username" />
-      <Submit />
-    </form>
+      <h3>Congratulations!</h3>
+      <p>Your time is (mm:ss): {`${minutes}:${seconds}`}</p>
+      <form className={`${styles.winForm}`}>
+        <label htmlFor="username">Enter your name:</label>
+        <input type="text" name="username" id="username" />
+        <Submit />
+      </form>
     </div>    
   </div>
   )

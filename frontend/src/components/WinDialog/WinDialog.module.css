@@ -16,3 +16,8 @@
   border-radius: 8px;
   z-index: 11;
 }
+
+.winForm {
+  display: flex;
+  flex-direction: column;
+}

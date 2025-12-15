@@ -63,7 +63,7 @@ function Game() {
 
   return (
     <>
-      {win && <WinDialog />}
+      {win && <WinDialog timer={timer} />}
       <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
         <div
