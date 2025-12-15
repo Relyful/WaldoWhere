@@ -5,7 +5,7 @@ export function useGameTimer() {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => setTimer(t => t + 1), 10);
+    intervalRef.current = setInterval(() => setTimer(t => t + 1), 1000);
     return () => clearInterval(intervalRef.current);
   }, []);
 
