@@ -7,60 +7,8 @@ import { useGameTimer } from "../../hooks/useGameTimer";
 import { callGameStart, callGameGuess, callStopTimer } from "../../api/gameApi";
 import { getClickPercent } from "../../utils/gameUtils";
 
-function TargetBox({ top, left, handleGameGuess, correctGuesses }) {
-  const availableChars = ["Waldo", "Odlaw", "Wizard"];
-  const foundCharacters = correctGuesses.map((x) => x.name);
-  const guessOptions = availableChars.map((name) => {
-    return (
-      <li
-        key={name}
-        className={foundCharacters.includes(name) ? styles.disabled : undefined}
-        onClick={
-          !foundCharacters.includes(name)
-            ? (e) => handleGameGuess(e, name)
-            : (e) => e.stopPropagation()
-        }
-      >
-        {name}
-      </li>
-    );
-  });
-  console.log(foundCharacters);
-  return (
-    <div
-      className={styles.target}
-      style={{
-        position: "absolute",
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: "translate(-50%, -50%)",
-      }}
-    >
-      <div className={`${styles.targetMenu}`}>
-        <ul>{guessOptions}</ul>
-      </div>
-    </div>
-  );
-}
-
-function CorrectGuessBoxes({ correctGuesses }) {
-  const correctGuessMarkers = correctGuesses?.map((guess) => {
-    return (
-      <div
-        key={`${guess.y},${guess.x}`}
-        style={{
-          position: "absolute",
-          top: `${guess.y}%`,
-          left: `${guess.x}%`,
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        ⭐
-      </div>
-    );
-  });
-  return <>{correctGuessMarkers}</>;
-}
+import TargetBox from "./TargetBox";
+import CorrectGuessBoxes from "./CorrecGuessBoxes";
 
 function Game() {
   const gameElement = useRef(null);

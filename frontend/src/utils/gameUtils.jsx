@@ -8,8 +8,7 @@ export function getClickPercent(e, gameElement) {
       x: mouseClickX - elementX,
       y: mouseClickY - elementY,
     };
-    const xPercentage = (result.x / rect.width) * 100;
-    const yPercentage = (result.y / rect.height) * 100;
-    console.log({ xPercentage, yPercentage });
+    const x = (result.x / rect.width) * 100;
+    const y = (result.y / rect.height) * 100;
     return {x, y}
 }
