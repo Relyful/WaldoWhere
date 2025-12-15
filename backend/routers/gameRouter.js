@@ -5,5 +5,6 @@ const gameRouter = Router();
 
 gameRouter.post('/stop', gameController.postTimerStop);
 gameRouter.post('/start', gameController.postTimerStart);
+gameRouter.post('/savegame', gameController.saveToLeaderBoard);
 
 module.exports = gameRouter;
