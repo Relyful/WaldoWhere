@@ -40,7 +40,7 @@ function Game() {
     return;
   }
 
-  function handleGameContainerClick(e) {
+  function handleGameContainerClick() {
     if (clickTarget !== null) {
       return setClickTarget(null);
     }

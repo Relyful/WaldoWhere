@@ -12,8 +12,6 @@ function Submit() {
 }
 
 export default function WinDialog({ timer }) {
-//FINISH FETCH TO SAVE TO LEADERBOARDS
-
   // Minutes calculation
   const minutes = Math.floor(timer / 60);
 
