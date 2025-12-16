@@ -18,10 +18,11 @@ exports.postTimerStart = (req, res) => {
 }
 
 exports.saveToLeaderBoard = async (req, res) => {
+  console.log(req.session.finalTime);
   const data = req.body;
   await prisma.leaderboard.create({
     data: {
-      name: data.name,
+      name: data.username,
       timer: req.session.finalTime
     }
   });
