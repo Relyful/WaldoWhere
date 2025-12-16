@@ -61,3 +61,25 @@ export async function callStopTimer() {
     console.error(err);
   }
 }
+
+export async function callSaveToLeaderboard(formData) {
+  const username = {username: formData.get("username")};
+  try {
+    const response = await fetch(`${backend}/game/savegame`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: 'include',
+      body: JSON.stringify(username)
+    });
+    if (!response.ok) {
+      throw new Error('Error posting to leaderboard');
+    }
+    console.log('done');
+    //TODO: navigate to leaderboard when it exists
+  } catch (err) {
+    console.error(err);
+  }
+  console.log(formData.get("username"));;
+}
