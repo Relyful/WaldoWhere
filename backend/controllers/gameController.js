@@ -28,3 +28,13 @@ exports.saveToLeaderBoard = async (req, res) => {
   });
   res.status(200).end();
 };
+
+exports.showLeaderboard = async (req, res) => {
+  const leaderboard = await prisma.leaderboard.findMany({
+    orderBy: {
+      timer: 'asc'
+    }
+  });
+  console.log(leaderboard)
+  res.json(leaderboard);
+}
