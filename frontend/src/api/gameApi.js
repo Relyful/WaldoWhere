@@ -63,23 +63,38 @@ export async function callStopTimer() {
 }
 
 export async function callSaveToLeaderboard(formData) {
-  const username = {username: formData.get("username")};
+  const username = { username: formData.get("username") };
   try {
     const response = await fetch(`${backend}/game/savegame`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
-      body: JSON.stringify(username)
+      credentials: "include",
+      body: JSON.stringify(username),
     });
     if (!response.ok) {
-      throw new Error('Error posting to leaderboard');
+      throw new Error("Error posting to leaderboard");
     }
-    console.log('done');
+    console.log("done");
     //TODO: navigate to leaderboard when it exists
   } catch (err) {
     console.error(err);
   }
-  console.log(formData.get("username"));;
+  console.log(formData.get("username"));
+}
+
+export async function fetchLeaderboard(signal) {
+  try {
+    const response = await fetch(`${backend}/game/leaderboard`, {
+      signal,
+    });
+    if (!response.ok) {
+      throw new Error("Error fetching leaderboard");
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
 }
