@@ -9,12 +9,14 @@ import { getClickPercent } from "../../utils/gameUtils";
 
 import TargetBox from "./TargetBox";
 import CorrectGuessBoxes from "./CorrecGuessBoxes";
+import ToastNotification from "../ToastNotification/ToastNotification";
 
 function Game() {
   const gameElement = useRef(null);
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [notification, setNotification] = useState(null);
   const { timer, stopTimer, intervalRef } = useGameTimer();  
 
   const win = correctGuesses.length > 2;
@@ -63,6 +65,10 @@ function Game() {
 
   return (
     <>
+      {notification && <ToastNotification 
+        message={'This is a test notification!'} 
+        onClose={() => setNotification(null)}/>
+        }
       {win && <WinDialog timer={timer} />}
       <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
@@ -89,6 +95,7 @@ function Game() {
             <CorrectGuessBoxes correctGuesses={correctGuesses} />
           )}
         </div>
+        <button type="button" onClick={() => setNotification(true)}>Show notif</button>
       </div>
     </>
   );
