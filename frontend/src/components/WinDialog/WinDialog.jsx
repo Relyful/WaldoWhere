@@ -1,6 +1,8 @@
 import { callSaveToLeaderboard } from '../../api/gameApi';
 import styles from './WinDialog.module.css';
-import { useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom";
+import { useNavigate } from "react-router";
+
 
 function Submit() {
   const { pending } = useFormStatus();
@@ -17,13 +19,20 @@ export default function WinDialog({ timer }) {
 
   // Seconds calculation
   const seconds = timer % 60;
+
+  const navigate = useNavigate();
+
+  function handleFormOnSubmit(formData) {
+    callSaveToLeaderboard(formData);
+    navigate('/leaderboard');
+  }
   
   return (
   <div className={styles.dialogBackdrop}>
     <div className={styles.dialogContent}>
       <h3>Congratulations!</h3>
       <p>Your time is (mm:ss): {`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</p>
-      <form className={`${styles.winForm}`} action={callSaveToLeaderboard}>
+      <form className={`${styles.winForm}`} action={handleFormOnSubmit}>
         <label htmlFor="username">Enter your name:</label>
         <input type="text" name="username" id="username" />
         <Submit />

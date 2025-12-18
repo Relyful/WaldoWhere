@@ -80,7 +80,6 @@ export async function callSaveToLeaderboard(formData) {
   } catch (err) {
     console.error(err);
   }
-  console.log(formData.get("username"));
 }
 
 export async function fetchLeaderboard(signal) {

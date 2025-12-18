@@ -17,15 +17,15 @@ export default function Leaderboard() {
       abortController.abort();
     };
   }, []);
+  
+  if (!leaderboardData) {
+    return <>Loading...</>;
+  }
 
   const leaderboardList = leaderboardData.map((obj) => {
     return <li key={obj.id}>Name: {obj.name}, Time: {obj.timer}ms, date: {obj.date}</li>
   })
-
-  if (leaderboardData === null) {
-    return <>Loading...</>;
-  }
-
+  
   return (
     <div className={styles.leaderboard}>
       <h2>Leaderboards</h2>
