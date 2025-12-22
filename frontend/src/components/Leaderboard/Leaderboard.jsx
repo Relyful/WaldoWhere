@@ -8,7 +8,9 @@ export default function Leaderboard() {
   useEffect(() => {
     const abortController = new AbortController();
     async function loadLeaderboard() {
-      const fetchedLeaderBoardData = await fetchLeaderboard(abortController.signal);
+      const fetchedLeaderBoardData = await fetchLeaderboard(
+        abortController.signal,
+      );
       console.log(fetchedLeaderBoardData);
       setLeaderboardData(fetchedLeaderBoardData);
     }
@@ -17,21 +19,31 @@ export default function Leaderboard() {
       abortController.abort();
     };
   }, []);
-  
+
   if (!leaderboardData) {
     return <>Loading...</>;
   }
+const leaderboardList = leaderboardData.map((obj) => {
+  const totalMs = obj.timer;
 
-  const leaderboardList = leaderboardData.map((obj) => {
-    return <li key={obj.id}>Name: {obj.name}, Time: {obj.timer}ms, date: {obj.date}</li>
-  })
-  
+  const minutes = Math.floor(totalMs / 60000);
+  const seconds = Math.floor((totalMs % 60000) / 1000);
+
+  return (
+    <li key={obj.id}>
+      Name: {obj.name}, Time:{" "}
+      {minutes.toString().padStart(2, "0")}:
+      {seconds.toString().padStart(2, "0")},{" "}
+      date: {obj.date}
+    </li>
+  );
+});
+
+
   return (
     <div className={styles.leaderboard}>
       <h2>Leaderboards</h2>
-      <ul>
-        {leaderboardList}
-      </ul>
+      <ul>{leaderboardList}</ul>
     </div>
   );
 }
