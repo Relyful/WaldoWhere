@@ -9,15 +9,15 @@ import { getClickPercent } from "../../utils/gameUtils";
 
 import TargetBox from "./TargetBox";
 import CorrectGuessBoxes from "./CorrecGuessBoxes";
-import ToastNotification from "../ToastNotification/ToastNotification";
+import { useOutletContext } from "react-router";
 
 function Game() {
   const gameElement = useRef(null);
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
-  const [notification, setNotification] = useState(null);
   const { timer, stopTimer, intervalRef } = useGameTimer();  
+  const { setNotification } = useOutletContext()
 
   const win = correctGuesses.length > 2;
 
@@ -57,18 +57,14 @@ function Game() {
     abortControllerRef.current = new AbortController();
     const x = clickTarget.x;
     const y = clickTarget.y;
-    callGameGuess(x, y, name, abortControllerRef.current.signal, setCorrectGuesses);
+    callGameGuess(x, y, name, abortControllerRef.current.signal, setCorrectGuesses, setNotification);
     return setClickTarget(null);
   }
 
   const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
 
   return (
-    <>
-      {notification && <ToastNotification 
-        message={'This is a test notification!'} 
-        onClose={() => setNotification(null)}/>
-        }
+    <>      
       {win && <WinDialog timer={timer} />}
       <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
@@ -95,7 +91,7 @@ function Game() {
             <CorrectGuessBoxes correctGuesses={correctGuesses} />
           )}
         </div>
-        <button type="button" onClick={() => setNotification(true)}>Show notif</button>
+        <button type="button" onClick={() => setNotification({'message': 'Fuck this', 'type': 'error'})}>Show notif</button>
       </div>
     </>
   );

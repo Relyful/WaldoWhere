@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './ToastNotification.module.css';
-import { createPortal } from "react-dom";
 
-export default function ToastNotification({ message, onClose }) {
+export default function ToastNotification({ message, type, onClose }) {
   const [visible, setVisible] = useState(null);
 
   useEffect(() => {
@@ -15,14 +14,13 @@ export default function ToastNotification({ message, onClose }) {
       clearTimeout(fadeOutTimer);
       clearTimeout(removeTimer);
     }
-  }, [])
+  }, [message])
 
-  return createPortal(
+  return (
     <div className={`${styles.modalContainer}`}>
-      <div className={`${styles.modal} ${visible ? styles.open : "" }`}>
+      <div className={`${styles.modal} ${visible ? styles.open : "" } ${styles[type]}`}>
         {message}
       </div>
-    </div>,
-    document.body
+    </div>
   )
 }
