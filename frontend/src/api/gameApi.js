@@ -19,7 +19,7 @@ export async function callGameStart(controller) {
   }
 }
 
-export async function callGameGuess(x, y, name, signal, setCorrectGuesses) {
+export async function callGameGuess(x, y, name, signal, setCorrectGuesses, setNotification) {
   try {
     const response = await fetch(`${backend}/guess`, {
       signal,
@@ -41,6 +41,9 @@ export async function callGameGuess(x, y, name, signal, setCorrectGuesses) {
     console.log(responseData);
     if (responseData.hit) {
       setCorrectGuesses((prevState) => [...prevState, { x, y, name }]);
+      setNotification({'type': 'notification', 'message': 'Congratulations! Correct guess!', 'id': crypto.randomUUID()});
+    } else {
+      setNotification({'type': 'error', 'message': 'Wrong Guess! Try again.', 'id': crypto.randomUUID()})
     }
   } catch (error) {
     console.error(error);
