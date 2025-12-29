@@ -1,7 +1,7 @@
 import { callSaveToLeaderboard } from '../../api/gameApi';
 import styles from './WinDialog.module.css';
 import { useFormStatus } from "react-dom";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 
 function Submit() {
@@ -35,6 +35,8 @@ export default function WinDialog({ timer }) {
         <label htmlFor="username">Enter your name:</label>
         <input type="text" name="username" id="username" />
         <Submit />
+        <Link to='/leaderboard'>Leaderboard</Link>
+        <Link to='/'>Homepage</Link>
       </form>
     </div>    
   </div>
