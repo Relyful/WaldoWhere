@@ -14,10 +14,9 @@ function Submit() {
 }
 
 export default function WinDialog({ timer }) {
-  // Minutes calculation
+
   const minutes = Math.floor(timer / 60);
 
-  // Seconds calculation
   const seconds = timer % 60;
 
   const navigate = useNavigate();
