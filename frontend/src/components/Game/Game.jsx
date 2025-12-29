@@ -91,7 +91,6 @@ function Game() {
             <CorrectGuessBoxes correctGuesses={correctGuesses} />
           )}
         </div>
-        <button type="button" onClick={() => setNotification({'message': 'Fuck this', 'type': 'error'})}>Show notif</button>
       </div>
     </>
   );
