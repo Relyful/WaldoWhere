@@ -1,3 +1,4 @@
+import styles from './Header.module.css';
 import { Link } from "react-router";
 import { Outlet } from "react-router";
 import { useState } from "react";
@@ -18,10 +19,13 @@ function Header() {
         />
       )}
       <header>
-        <div className="logo">Rely&apos;s Game</div>
-        <nav className="nav">
-          <Link to="/" className="link">
+        <div className={styles.logo}>WaldoWhere</div>
+        <nav className={styles.nav}>
+          <Link to="/" className={styles.link}>
             Home
+          </Link>
+          <Link to="/leaderboard" className={styles.link}>
+            Leaderboard
           </Link>
         </nav>
       </header>
