@@ -16,6 +16,7 @@ function Game() {
   const abortControllerRef = useRef(null);
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { timer, stopTimer, intervalRef } = useGameTimer();  
   const { setNotification } = useOutletContext()
 
@@ -24,7 +25,11 @@ function Game() {
   // start timer on server
   useEffect(() => {
     const controller = new AbortController();    
-    callGameStart(controller);
+    async function startTimer() {
+      await callGameStart(controller);
+      setLoading(false);
+    };
+    startTimer();
     return () => controller.abort();
   }, []);
 
@@ -62,6 +67,8 @@ function Game() {
   }
 
   const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
+
+  if (loading) return (<div className={styles.loading}>Loading...</div>)
 
   return (
     <>      
