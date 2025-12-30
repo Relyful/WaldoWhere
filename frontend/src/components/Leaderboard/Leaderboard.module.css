@@ -1,0 +1,16 @@
+.leaderboard {
+  display: grid;
+  grid-template-columns: 30rem auto 30rem;
+  grid-template-rows: 30rem auto;
+}
+
+h2 {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: center;
+}
+
+ul {
+  grid-row: 2;
+  grid-column: 2;
+}
