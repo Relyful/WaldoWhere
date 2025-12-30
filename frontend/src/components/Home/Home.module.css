@@ -1,12 +1,29 @@
-.heading {
-  text-align: center;
-  padding: 25rem 0 10rem 0;
+/* The Parent Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  flex-grow: 1;
+  background-color: #547792;
+}
+
+.heading { 
+  padding-bottom: 2rem;
   font-size: 4em;
+  color: #EAE0CF;
+  text-align: center;
 }
 
 .startButton {
-  text-align: center;
   font-size: 2em;
   text-decoration: none;
-  color: gray;
+  color: #EAE0CF;
+  padding: 10px 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.startButton:hover {
+  transform: scale(1.2);
+  color: white;
 }
