@@ -4,6 +4,7 @@ import { Outlet } from "react-router";
 import { useState } from "react";
 
 import ToastNotification from "../ToastNotification/ToastNotification";
+import Footer from '../Footer/Footer';
 
 function Header() {
   const [notification, setNotification] = useState(null);
@@ -32,7 +33,7 @@ function Header() {
       <main>
         <Outlet context={{ setNotification }} />
       </main>
-      <footer>Made by Rely</footer>
+      <Footer />
     </>
   );
 }
