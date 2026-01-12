@@ -28,6 +28,11 @@ const leaderboardList = leaderboardData.map((obj) => {
 
   const minutes = Math.floor(totalMs / 60000);
   const seconds = Math.floor((totalMs % 60000) / 1000);
+  
+  function convertDateToString(date) {
+    const newDate = new Date(date);
+    return (newDate.toLocaleString("en-GB"));
+  };
 
   return (
     <li className={styles.gridContainer} key={obj.id}>
@@ -35,7 +40,7 @@ const leaderboardList = leaderboardData.map((obj) => {
       <div className={styles.listTime}>{" "}
       {minutes.toString().padStart(2, "0")}:
       {seconds.toString().padStart(2, "0")}{" "}</div>
-      <div className={styles.listDate}>{obj.date}</div>
+      <div className={styles.listDate}>{convertDateToString(obj.date)}</div>
     </li>
   );
 });
