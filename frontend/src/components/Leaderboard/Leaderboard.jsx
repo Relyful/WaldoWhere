@@ -30,11 +30,12 @@ const leaderboardList = leaderboardData.map((obj) => {
   const seconds = Math.floor((totalMs % 60000) / 1000);
 
   return (
-    <li key={obj.id}>
-      Name: {obj.name}, Time:{" "}
+    <li className={styles.gridContainer} key={obj.id}>
+      <div className={styles.listName}>{obj.name}</div>
+      <div className={styles.listTime}>{" "}
       {minutes.toString().padStart(2, "0")}:
-      {seconds.toString().padStart(2, "0")},{" "}
-      date: {obj.date}
+      {seconds.toString().padStart(2, "0")}{" "}</div>
+      <div className={styles.listDate}>{obj.date}</div>
     </li>
   );
 });
@@ -43,7 +44,14 @@ const leaderboardList = leaderboardData.map((obj) => {
   return (
     <div className={styles.leaderboard}>
       <h2>Leaderboards</h2>
-      <ul>{leaderboardList}</ul>
+      <ul>
+        <li className={`${styles.gridContainer} ${styles.listHeader}`}>
+          <div className={`${styles.listName} ${styles.listHeader}`}>Name</div>
+          <div className={`${styles.listTime} ${styles.listHeader}`}>Time</div>
+          <div className={`${styles.listDate} ${styles.listHeader}`}>Date</div>
+        </li>
+        {leaderboardList}
+      </ul>
     </div>
   );
 }

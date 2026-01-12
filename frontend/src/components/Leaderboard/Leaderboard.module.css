@@ -1,16 +1,43 @@
 .leaderboard {
   display: grid;
   grid-template-columns: 30rem auto 30rem;
-  grid-template-rows: 30rem auto;
+  grid-template-rows: 10rem auto;
 }
 
 h2 {
   grid-row: 1;
   grid-column: 2;
   justify-self: center;
+  padding-top: 3rem;
 }
 
 ul {
   grid-row: 2;
   grid-column: 2;
+}
+
+.gridContainer {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.212);
+}
+
+.listHeader {
+  font-weight: bold;
+  font-size: 1.1em;
+  padding-bottom: 0.5rem;
+  border-bottom: none;
+}
+
+.listName {
+  grid-column: 0 1;
+}
+
+.listTime {
+  grid-column: 1 2;
+}
+
+.listDate {
+  grid-column: 2 3;
 }
