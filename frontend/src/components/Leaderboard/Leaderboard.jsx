@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Leaderboard.module.css";
 import { fetchLeaderboard } from "../../api/gameApi";
+import { convertDateToString } from "../../utils/leaderboardUtils";
 
 export default function Leaderboard() {
   const [leaderboardData, setLeaderboardData] = useState(null);
@@ -29,11 +30,6 @@ const leaderboardList = leaderboardData.map((obj) => {
   const minutes = Math.floor(totalMs / 60000);
   const seconds = Math.floor((totalMs % 60000) / 1000);
   
-  function convertDateToString(date) {
-    const newDate = new Date(date);
-    return (newDate.toLocaleString("en-GB"));
-  };
-
   return (
     <li className={styles.gridContainer} key={obj.id}>
       <div className={styles.listName}>{obj.name}</div>
