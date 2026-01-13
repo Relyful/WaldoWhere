@@ -79,7 +79,6 @@ export async function callSaveToLeaderboard(formData) {
     if (!response.ok) {
       throw new Error("Error posting to leaderboard");
     }
-    //TODO: navigate to leaderboard when it exists
   } catch (err) {
     console.error(err);
   }
