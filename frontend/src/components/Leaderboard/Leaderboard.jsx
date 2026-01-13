@@ -44,7 +44,7 @@ const leaderboardList = leaderboardData.map((obj) => {
 
   return (
     <div className={styles.leaderboard}>
-      <h2>Leaderboards</h2>
+      <h2 className={styles.heading2}>Leaderboards</h2>
       <ul>
         <li className={`${styles.gridContainer} ${styles.listHeader}`}>
           <div className={`${styles.listName} ${styles.listHeader}`}>Name</div>
