@@ -21,8 +21,8 @@ export default function WinDialog({ timer }) {
 
   const navigate = useNavigate();
 
-  function handleFormOnSubmit(formData) {
-    callSaveToLeaderboard(formData);
+  async function handleFormOnSubmit(formData) {
+    await callSaveToLeaderboard(formData);
     navigate('/leaderboard');
   }
   
