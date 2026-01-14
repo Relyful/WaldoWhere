@@ -6,17 +6,18 @@
   justify-content: center; 
   flex-grow: 1;
   background-color: #547792;
+  font-family: "Caveat", sans-serif;
 }
 
 .heading { 
   padding-bottom: 2rem;
-  font-size: 4em;
+  font-size: 5em;
   color: #EAE0CF;
   text-align: center;
 }
 
 .startButton {
-  font-size: 2em;
+  font-size: 3em;
   text-decoration: none;
   color: #EAE0CF;
   padding: 10px 20px;

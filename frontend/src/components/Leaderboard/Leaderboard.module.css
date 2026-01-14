@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 30rem auto 30rem;
   grid-template-rows: 10rem auto;
+  color: rgb(255, 255, 255);
 }
 
 .heading2 {
@@ -9,6 +10,7 @@
   grid-column: 2;
   justify-self: center;
   padding-top: 3rem;
+  color: #EAE0CF;
 }
 
 ul {
@@ -28,6 +30,7 @@ ul {
   font-size: 1.1em;
   padding-bottom: 0.5rem;
   border-bottom: none;
+  color: #EAE0CF;
 }
 
 .listName {
