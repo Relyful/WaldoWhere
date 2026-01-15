@@ -20,11 +20,14 @@
   font-size: 3em;
   text-decoration: none;
   color: #EAE0CF;
-  padding: 10px 20px;
+  padding: 10px 30px 10px 20px;
   transition: transform 0.3s ease-in-out;
+
+  border: 1px solid #EAE0CF;
+  border-radius: 30px;
+  display: flex;
 }
 
 .startButton:hover {
-  transform: scale(1.2);
-  color: white;
+  transform: scale(1.1);
 }
