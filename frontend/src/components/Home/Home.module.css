@@ -24,10 +24,28 @@
   transition: transform 0.3s ease-in-out;
 
   border: 1px solid #EAE0CF;
-  border-radius: 30px;
+  border-radius: 40px;
   display: flex;
 }
 
 .startButton:hover {
   transform: scale(1.1);
+}
+
+.secondHeading {
+  font-size: 2.5em;
+  color: #EAE0CF;
+}
+
+.characterList {
+  padding: 1rem 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.headPic {
+  height: 7rem;
+  border: 1px solid black;
+  border-radius: 50px;
+  background-color: white;
 }
