@@ -12,6 +12,5 @@ indexRouter.use((req, res, next) => {
 });
 
 indexRouter.get("/", indexController.getIndex);
-indexRouter.post("/guess", indexController.getGuess);
 
 module.exports = indexRouter;

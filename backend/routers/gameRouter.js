@@ -5,6 +5,7 @@ const gameRouter = Router();
 
 gameRouter.post('/stop', gameController.postTimerStop);
 gameRouter.post('/start', gameController.postTimerStart);
+gameRouter.post("/guess", gameRouter.getGuess);
 gameRouter.post('/savegame', gameController.saveToLeaderBoard);
 gameRouter.get('/leaderboard', gameController.showLeaderboard);
 
