@@ -6,10 +6,12 @@ import WinDialog from "../WinDialog/WinDialog";
 import { useGameTimer } from "../../hooks/useGameTimer";
 import { callGameStart, callGameGuess, callStopTimer } from "../../api/gameApi";
 import { getClickPercent } from "../../utils/gameUtils";
-
 import TargetBox from "./TargetBox";
 import CorrectGuessBoxes from "./CorrecGuessBoxes";
 import { useOutletContext } from "react-router";
+import waldo from "../../assets/waldo.jpeg"
+import odlaw from "../../assets/odlaw.webp"
+import wizard from "../../assets/wizard.webp"
 
 function Game() {
   const gameElement = useRef(null);
@@ -73,7 +75,14 @@ function Game() {
   return (
     <>      
       {win && <WinDialog timer={timer} />}
-      <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
+      <div className={styles.topRow}>
+        <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
+        <div className={styles.characterFaces}>
+          <img src={waldo} alt="waldo head pic" className={styles.headPic} />
+          <img src={odlaw} alt="odlaw head pic" className={styles.headPic} />
+          <img src={wizard} alt="wizard head pic" className={styles.headPic} />
+        </div>
+      </div>
       <div className={styles.gameContainer} onClick={handleGameContainerClick}>
         <div
           className={styles.gameArea}

@@ -1,3 +1,23 @@
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+  margin: 5px 0;
+}
+
+.characterFaces {
+  display: flex;
+  gap: 0.5em;
+}
+
+.headPic {
+  height: 3em;
+  background-color: white;
+  border: 1px solid #EAE0CF;
+  border-radius: 50px;
+}
+
 .gameContainer {
   display: flex;
   justify-content: center;
