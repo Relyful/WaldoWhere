@@ -20,7 +20,7 @@ function Header() {
         />
       )}
       <header>
-        <div className={styles.logo}>WaldoWhere</div>
+        <Link to="/"><div className={styles.logo}>WaldoWhere</div></Link>
         <nav className={styles.nav}>
           <Link to="/" className={styles.link}>
             Home

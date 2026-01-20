@@ -32,4 +32,9 @@ main {
   text-decoration: none;
   color: white;
   font-size: 1.2em;
+  transition: color 0.2s ease-in;
+}
+
+.link:hover {
+  color: rgb(255, 245, 212);
 }
