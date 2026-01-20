@@ -8,6 +8,7 @@ function CorrectGuessBoxes({ correctGuesses }) {
           top: `${guess.y}%`,
           left: `${guess.x}%`,
           transform: "translate(-50%, -50%)",
+          fontSize: '2em',
         }}
       >
         ⭐
