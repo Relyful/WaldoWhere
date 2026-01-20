@@ -21,7 +21,7 @@ export async function callGameStart(controller) {
 
 export async function callGameGuess(x, y, name, signal, setCorrectGuesses, setNotification) {
   try {
-    const response = await fetch(`${backend}/guess`, {
+    const response = await fetch(`${backend}/game/guess`, {
       signal,
       method: "POST",
       headers: {
