@@ -12,12 +12,7 @@ exports.postTimerStop = (req, res) => {
   res.status(200).end();
 }
 
-exports.postTimerStart = (req, res) => {
-  req.session.regenerate((err) => {
-    if(err) {
-      req.status(500).send('Error regenerating session')
-    }
-  });
+exports.postTimerStart = (req, res) => {  
   req.session.timerStart = Date.now();
   return res.status(200).end();
 }
