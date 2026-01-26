@@ -15,7 +15,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 //Set-up cors access
 app.use(cors({
-  origin: ["https://waldo-where.vercel.app/", "http://localhost:5173"],
+  origin: process.env.ALLOWED_ORIGIN ? process.env.ALLOWED_ORIGIN : ["http://localhost:5173"],
   credentials: true
 }));
 //Allow json 
