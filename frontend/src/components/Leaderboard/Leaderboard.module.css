@@ -45,3 +45,10 @@ ul {
 .listDate {
   grid-column: 2 3;
 }
+
+.loading {
+  margin-top: 25vh;
+  align-self: center;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}

@@ -22,7 +22,7 @@ export default function Leaderboard() {
   }, []);
 
   if (!leaderboardData) {
-    return <>Loading...</>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 const leaderboardList = leaderboardData.map((obj) => {
   const totalMs = obj.timer;
