@@ -52,7 +52,8 @@ const leaderboardList = leaderboardData.map((obj) => {
           <div className={`${styles.listDate} ${styles.listHeader}`}>Date</div>
         </li>
         {leaderboardList}
-      </ul>
+        {leaderboardList.length < 1 && <div>Be the first on the leaderboard!</div>}
+      </ul>      
     </div>
   );
 }
