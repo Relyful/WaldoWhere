@@ -19,6 +19,7 @@ function Game() {
   const [clickTarget, setClickTarget] = useState(null);
   const [correctGuesses, setCorrectGuesses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
   const { timer, stopTimer, intervalRef } = useGameTimer();  
   const { setNotification } = useOutletContext()
 
@@ -70,42 +71,44 @@ function Game() {
 
   const areThereCorrectGuesses = (() => correctGuesses.length > 0)();
 
-  if (loading) return (<div className={styles.loading}>Loading...</div>)
-
   return (
-    <>      
-      {win && <WinDialog timer={timer} />}
-      <div className={styles.topRow}>
-        <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
-        <div className={styles.characterFaces}>
-          <img src={waldo} alt="waldo head pic" className={styles.headPic} />
-          <img src={odlaw} alt="odlaw head pic" className={styles.headPic} />
-          <img src={wizard} alt="wizard head pic" className={styles.headPic} />
+    <>
+      {(loading || imageLoading) && (<div className={styles.loading}>Loading...</div>)}
+      <div style={{ display: (loading || imageLoading) ? 'none' : 'block' }}>
+        {win && <WinDialog timer={timer} />}
+        <div className={styles.topRow}>
+          <Timer timer={timer} stopTimer={stopTimer} intervalRef={intervalRef} />
+          <div className={styles.characterFaces}>
+            <img src={waldo} alt="waldo head pic" className={styles.headPic} />
+            <img src={odlaw} alt="odlaw head pic" className={styles.headPic} />
+            <img src={wizard} alt="wizard head pic" className={styles.headPic} />
+          </div>
         </div>
-      </div>
-      <div className={styles.gameContainer} onClick={handleGameContainerClick}>
-        <div
-          className={styles.gameArea}
-          onClick={handleGameAreaClick}
-          ref={gameElement}
-        >
-          <img
-            src={waldoImage1}
-            alt="Where's Waldo game"
-            className={styles.waldoPic}
-          />
-          {clickTarget && (
-            <TargetBox
-              top={clickTarget.y}
-              left={clickTarget.x}
-              handleGameGuess={handleGameGuess}
-              correctGuesses={correctGuesses}
-              key={`${clickTarget.x}-${clickTarget.y}`}
+        <div className={styles.gameContainer} onClick={handleGameContainerClick}>
+          <div
+            className={styles.gameArea}
+            onClick={handleGameAreaClick}
+            ref={gameElement}
+          >
+            <img
+              src={waldoImage1}
+              alt="Where's Waldo game"
+              className={styles.waldoPic}
+              onLoad={() => setImageLoading(false)}
             />
-          )}
-          {areThereCorrectGuesses && (
-            <CorrectGuessBoxes correctGuesses={correctGuesses} />
-          )}
+            {clickTarget && (
+              <TargetBox
+                top={clickTarget.y}
+                left={clickTarget.x}
+                handleGameGuess={handleGameGuess}
+                correctGuesses={correctGuesses}
+                key={`${clickTarget.x}-${clickTarget.y}`}
+              />
+            )}
+            {areThereCorrectGuesses && (
+              <CorrectGuessBoxes correctGuesses={correctGuesses} />
+            )}
+          </div>
         </div>
       </div>
     </>

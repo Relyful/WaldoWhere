@@ -66,6 +66,14 @@
   padding: 0 0.5em;
 }
 
+.loading {
+  margin-top: 25vh;
+  align-self: center;
+  color: #EAE0CF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
+}
+
 .disabled {
   opacity: 0.5;
 }
