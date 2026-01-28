@@ -1,6 +1,6 @@
 .leaderboard {
   display: grid;
-  grid-template-columns: 30rem auto 30rem;
+  grid-template-columns: 25rem auto 25rem;
   grid-template-rows: 10rem auto;
   color: rgb(255, 255, 255);
 }
@@ -22,8 +22,9 @@ ul {
 .gridContainer {
   list-style-type: none;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   border-bottom: 1px solid rgba(0, 0, 0, 0.212);
+  min-width: 600px;
 }
 
 .listHeader {
@@ -51,4 +52,10 @@ ul {
   align-self: center;
   color: white;
   font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (min-width: 1950px) {
+  .leaderboard {
+    grid-template-columns: 35rem auto 35rem;
+  }
 }

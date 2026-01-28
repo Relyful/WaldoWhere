@@ -7,6 +7,7 @@
   flex-grow: 1;
   background-color: #547792;
   font-family: "Caveat", sans-serif;
+  min-width: 600px;
 }
 
 .heading { 
