@@ -34,7 +34,7 @@ export async function callGameGuess(x, y, name, signal, setCorrectGuesses, setNo
       }),
       credentials: "include",
     });
-    if (!response.ok) {
+    if (!response.ok) {      
       throw new Error("Error sending guess request game guess.");
     }
     const responseData = await response.json();
@@ -43,9 +43,10 @@ export async function callGameGuess(x, y, name, signal, setCorrectGuesses, setNo
       setCorrectGuesses((prevState) => [...prevState, { x, y, name }]);
       setNotification({'type': 'notification', 'message': 'Congratulations! Correct guess!', 'id': crypto.randomUUID()});
     } else {
-      setNotification({'type': 'error', 'message': 'Wrong Guess! Try again.', 'id': crypto.randomUUID()})
+      setNotification({'type': 'error', 'message': 'Wrong Guess! Try again.', 'id': crypto.randomUUID()});
     }
   } catch (error) {
+    setNotification({'type': 'error', 'message': 'Error communicating with server. Please try again!', 'id': crypto.randomUUID()});
     console.error(error);
   }
   return;
