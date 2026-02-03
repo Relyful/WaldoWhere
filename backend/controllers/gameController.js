@@ -19,8 +19,9 @@ exports.postTimerStart = (req, res) => {
 
 exports.getGuess = async (req, res) => {
   const data = req.body;
-  const x = parseInt(data.x)
-  const y = parseInt(data.y)
+  console.log(data)
+  const x = parseFloat(data.x)
+  const y = parseFloat(data.y)
   const character = data.character;
 
   const correctCharacterRange = await prisma.waldoGame.findFirst({
