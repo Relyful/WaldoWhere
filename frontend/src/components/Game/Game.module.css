@@ -71,6 +71,10 @@
   cursor: pointer;
 }
 
+.targetMenu ul li:hover {
+  background-color: #294962;
+}
+
 .loading {
   margin-top: 25vh;
   align-self: center;
