@@ -46,6 +46,8 @@
   height: 10px;
   border-radius: 50%;
   border: 2px solid red;
+
+  z-index: 99;
 }
 
 .targetMenu {
@@ -55,7 +57,9 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: white;
+  background-color: #547792;
+  color: white;
+  border: 1px solid black;
 
   animation: menuEnter 150ms ease-out forwards;
   transform-origin: top left;
@@ -63,7 +67,8 @@
 
 .targetMenu ul li {
   border: 1px solid black;
-  padding: 0 0.5em;
+  padding: 0.1em 0.7em;
+  cursor: pointer;
 }
 
 .loading {
