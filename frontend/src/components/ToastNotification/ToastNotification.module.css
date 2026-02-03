@@ -24,9 +24,13 @@
 }
 
 .error { 
-  border-left: solid 5px red;
+  background-color: #fee2e2; /* light red */
+  color: #991b1b;
+  border: 1px solid #f87171;
 }
 
 .notification {
-  border-left: solid 5px green;
+  background-color: #dcfce7; /* light green */
+  color: #166534;
+  border: 1px solid #4ade80;
 }
