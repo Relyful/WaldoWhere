@@ -91,7 +91,7 @@ To get a local copy of this project up and running, follow these steps.
 
    ```bash
    cd backend
-   node seed.mjs
+   node seed.js
    ```
 
   5. **Start the development server:**
